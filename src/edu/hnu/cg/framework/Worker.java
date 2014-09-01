@@ -168,11 +168,15 @@ public class Worker<VertexValueType, EdgeValueType, MsgValueType> extends Task {
 
 		if (offset < vertexIndexBuffer.capacity()) {
 
-			synchronized (vertexIndexBuffer) {
+			fetchIndex = vertexIndexBuffer.getInt(offset);
+			
+			System.out.println(fetchIndex);
+			/*synchronized (vertexIndexBuffer) {
 				vertexIndexBuffer.position(offset);
 				vertexIndexBuffer.get(intVal, 0, 4);
 				fetchIndex = byteArrayToInt(intVal);
-			}
+				
+			}*/
 
 			synchronized (vertexInforBuffer) {
 				vertexInforBuffer.position(fetchIndex);

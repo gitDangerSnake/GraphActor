@@ -99,9 +99,6 @@ public class Manager<VertexValueType , EdgeValueType , MsgValueType> extends Tas
 
 			workCounter = 0;
 
-			// 卸载分区
-			unload(counter);
-
 			counter++;
 			if (counter == sections.length) {
 				counter = 0;

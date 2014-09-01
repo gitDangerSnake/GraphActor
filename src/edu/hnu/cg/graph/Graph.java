@@ -9,9 +9,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.StringTokenizer;
+
+import sun.awt.geom.AreaOp.IntOp;
 
 //import edu.hnu.cg.framework.Worker;
 import edu.hnu.cg.graph.datablocks.BytesToValueConverter;
@@ -500,15 +503,15 @@ public class Graph<VertexValueType , EdgeValueType , MsgValueType> {
 	}
 
 	public static int byteArrayToInt(byte[] array) {
-		return ((array[3] & 0xff) << 24) + ((array[2] & 0xff) << 16) + ((array[1] & 0xff) << 8) + (array[0] & 0xff);
+		return ((array[0] & 0xff) << 24) + ((array[1] & 0xff) << 16) + ((array[2] & 0xff) << 8) + (array[3] & 0xff);
 	}
 
 	public static byte[] intToByteArray(int val) {
 		byte[] array = new byte[4];
-		array[0] = (byte) ((val) & 0xff);
-		array[1] = (byte) ((val >>> 8) & 0xff);
-		array[2] = (byte) ((val >>> 16) & 0xff);
-		array[3] = (byte) ((val >>> 24) & 0xff);
+		array[3] = (byte) ((val) & 0xff);
+		array[2] = (byte) ((val >>> 8) & 0xff);
+		array[1] = (byte) ((val >>> 16) & 0xff);
+		array[0] = (byte) ((val >>> 24) & 0xff);
 		return array;
 	}
 
@@ -534,10 +537,15 @@ public class Graph<VertexValueType , EdgeValueType , MsgValueType> {
 
 	public static void main(String[] args) throws IOException {
 
-		System.out.println(getFirst(11342L));
-		System.out.println(getSecond(11342L));
-		Graph graph = new Graph<>(args[0], args[1], null, new DoubleConverter(), null, null);
-		graph.readData();
+		ByteBuffer bb = ByteBuffer.allocate(1024);
+		bb.putLong(20);
+		bb.put(longToByteArray(20));
+		bb.put(intToByteArray(4));
+		bb.flip();
+		
+		while(bb.hasRemaining()){
+			System.out.println(bb.getLong());
+		}
 
 	}
 

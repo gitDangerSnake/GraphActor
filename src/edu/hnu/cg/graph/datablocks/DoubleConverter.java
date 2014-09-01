@@ -1,5 +1,7 @@
 package edu.hnu.cg.graph.datablocks;
 
+import java.nio.ByteBuffer;
+
 public class DoubleConverter implements BytesToValueConverter<Double> {
 
 	@Override
@@ -35,6 +37,8 @@ public class DoubleConverter implements BytesToValueConverter<Double> {
 		byte[] arr = new byte[8];
 		dc.setValue(arr, 3.14);
 		System.out.println(dc.getValue(arr));
+		
+		
 	}
 
 }
